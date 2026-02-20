@@ -1,0 +1,27 @@
+class Solution(object):
+    def minWindow(self,s,t):
+        if t=="":return t
+        count_t={}
+        count_s={}
+        for i in t:
+            count_t[i]=count_t.get(i,0)+1
+        found,total=0,len(count_t)
+        res,l=[-1,-1],float('inf')
+        j=0
+        for i in range(len(s)):
+            cur_val=s[i]
+            count_s[cur_val]=count_s.get(cur_val,0)+1
+            if cur_val in count_t and count_s[cur_val]==count_t[cur_val]:
+                found+=1
+            while found==total:
+                if((i-j)+1)<l:
+                    res=[j,i]
+                    l=(i-j)+1
+                count_s[s[j]]-=1
+                if s[j] in count_t and count_s[s[j]]<count_t[s[j]]:
+                    found-=1
+                j+=1
+        return "" if l==float('inf') else s[res[0]:res[1]+1]
+        
+
+        
